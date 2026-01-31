@@ -1,8 +1,8 @@
 CXX := g++
 CXXFLAGS := -std=c++17 -Wall -Wextra -g
 
-TARGET := testbst
-SRCS := intbst.cpp testbst.cpp
+TARGET := test_intbst
+SRCS := intbst.cpp test_intbst.cpp
 OBJS := $(SRCS:.cpp=.o)
 
 .PHONY: all clean run
