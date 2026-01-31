@@ -19,7 +19,7 @@ IntBST::~IntBST() {
 
 // recursive helper for destructor
 void IntBST::clear(Node *n) {
-    if(n){
+    if (n){
         clear(n -> left);
         clear(n -> right);
         delete n;
@@ -28,7 +28,7 @@ void IntBST::clear(Node *n) {
 
 // insert value in tree; return false if duplicate
 bool IntBST::insert(int value) {
-    if(!root){
+    if (!root){
         Node* temp = new Node();
         temp -> info = value;
         root = temp;
@@ -42,12 +42,12 @@ bool IntBST::insert(int value) {
 
 // recursive helper for insert (assumes n is never 0)
 bool IntBST::insert(int value, Node *n) {
-    if(value == n-> info){
+    if (value == n-> info){
         return false;
     }
 
-    if(value < n -> info){
-        if(n -> left == nullptr){
+    if (value < n -> info){
+        if (n -> left == nullptr){
             Node* temp = new Node();
             temp -> info = value;
             temp -> parent = n;
@@ -61,7 +61,7 @@ bool IntBST::insert(int value, Node *n) {
     }
 
     else{
-        if(n -> right == nullptr){
+        if (n -> right == nullptr){
             Node* temp = new Node();
             temp -> info = value;
             temp -> parent = n;
@@ -82,7 +82,7 @@ void IntBST::printPreOrder() const {
 
 // recursive helper for printPreOrder()
 void IntBST::printPreOrder(Node *n) const {
-    if(n){
+    if (n){
         cout << n -> info << " ";
         printPreOrder(n -> left);
         printPreOrder(n -> right);
@@ -94,7 +94,7 @@ void IntBST::printInOrder() const {
     printInOrder(root);
 }
 void IntBST::printInOrder(Node *n) const {
-    if(n){
+    if (n){
         printInOrder(n -> left);
         cout << n -> info << " ";
         printInOrder(n -> right);
@@ -106,7 +106,7 @@ void IntBST::printPostOrder() const {
 }
 
 void IntBST::printPostOrder(Node *n) const {
-    if(n){
+    if (n){
         printPostOrder(n -> left);
         printPostOrder(n -> right);
         cout << n -> info << " ";
@@ -120,7 +120,7 @@ int IntBST::sum() const {
 
 // recursive helper for sum
 int IntBST::sum(Node *n) const {
-    if(n == nullptr){
+    if (n == nullptr){
         return 0;
     }
 
@@ -136,7 +136,7 @@ int IntBST::count() const {
 
 // recursive helper for count
 int IntBST::count(Node *n) const {
-    if(n == nullptr){
+    if (n == nullptr){
         return 0;
     }
 
@@ -152,15 +152,15 @@ int IntBST::count(Node *n) const {
 // Whenever you call this method from somewhere else, pass it
 // the root node as "n"
 IntBST::Node* IntBST::getNodeFor(int value, Node* n) const{
-    if(!n){
+    if (!n){
         return nullptr;
     }
 
-    if(n -> info == value){
+    if (n -> info == value){
         return n;
     }
 
-    else if(value < n -> info){
+    else if (value < n -> info){
         return getNodeFor(value, n -> left);
     }
 
@@ -206,7 +206,7 @@ IntBST::Node* IntBST::getPredecessorNode(int value) const{
 
 // returns the predecessor value of the given value or 0 if there is none
 int IntBST::getPredecessor(int value) const{
-    if(getPredecessorNode(value)){
+    if (getPredecessorNode(value)){
         return getPredecessorNode(value) -> info;
     }
 
@@ -241,7 +241,7 @@ IntBST::Node* IntBST::getSuccessorNode(int value) const{
 // returns the successor value of the given value or 0 if there is none
 int IntBST::getSuccessor(int value) const{
     Node* successor = getSuccessorNode(value);
-    if(successor){
+    if (successor){
         return successor -> info;
     }
     return 0;
@@ -253,29 +253,30 @@ int IntBST::getSuccessor(int value) const{
 bool IntBST::remove(int value){
     Node* toDelete = getNodeFor(value, root);
 
-    if(!toDelete){
+    if (!toDelete){
         return false;
     }
 
-    if(!toDelete->left && !toDelete->right){
-        if(!toDelete -> parent){
+    if (!toDelete -> left && !toDelete -> right){
+        if (!toDelete -> parent){
             root = nullptr;
         } 
 
-        else if(toDelete == toDelete->parent->left){
+        else if (toDelete == toDelete -> parent -> left){
             toDelete -> parent -> left = nullptr;
         } 
 
         else{
             toDelete -> parent -> right = nullptr;
         }
+
         delete toDelete;
     }
 
-    else if (!toDelete->left || !toDelete->right){
+    else if (!toDelete -> left || !toDelete -> right){
         Node* temp;
-        
-        if(!toDelete->left){
+
+        if (!toDelete -> left){
             temp = toDelete -> right;
         } 
 
@@ -283,19 +284,28 @@ bool IntBST::remove(int value){
             temp = toDelete -> left;
         }
         
-        if(!toDelete->parent){
+        if (!toDelete -> parent){
             root = temp;
-            if(temp) temp -> parent = nullptr;
+
+            if (temp){
+                temp -> parent = nullptr;
+            }
         } 
 
-        else if(toDelete == toDelete->parent->left){
+        else if (toDelete == toDelete -> parent -> left){
             toDelete -> parent -> left = temp;
-            if(temp) temp -> parent = toDelete -> parent;
-        } 
+
+            if (temp){
+                temp -> parent = toDelete -> parent;
+            } 
+        }
 
         else{
             toDelete -> parent -> right = temp;
-            if(temp) temp -> parent = toDelete -> parent;
+
+            if (temp){
+                temp -> parent = toDelete -> parent;
+            }
         }
 
         delete toDelete;
@@ -310,8 +320,8 @@ bool IntBST::remove(int value){
 
         toDelete -> info = successor -> info;
         
-        if(successor -> right){
-            if(successor == toDelete -> right){
+        if (successor -> right){
+            if (successor == toDelete -> right){
                 toDelete -> right = successor -> right;
                 successor -> right -> parent = toDelete;
             } 
@@ -319,14 +329,14 @@ bool IntBST::remove(int value){
             else{
                 successor -> parent -> left = successor -> right;
 
-                if(successor -> right){
+                if (successor -> right){
                     successor -> right -> parent = successor -> parent;
                 }
             }
         } 
         
         else{
-            if(successor == toDelete -> right){
+            if (successor == toDelete -> right){
                 toDelete -> right = nullptr;
             }
 
